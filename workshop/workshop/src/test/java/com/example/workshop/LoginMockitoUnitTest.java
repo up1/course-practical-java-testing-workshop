@@ -2,6 +2,7 @@ package com.example.workshop;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,6 +14,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class LoginMockitoUnitTest {
 
+    @InjectMocks
+    private Login login;
+
     @Mock
     private UserRepository userRepository;
 
@@ -22,8 +26,6 @@ class LoginMockitoUnitTest {
         // BDD => Given-When-Then
         when(userRepository.login("somkiat", "xxxx"))
                 .thenReturn(true);
-        Login login = new Login();
-        login.setUserRepository(userRepository);
         // Call target method
         boolean result = login.process("somkiat", "xxxx");
         // Assertion
@@ -35,8 +37,6 @@ class LoginMockitoUnitTest {
         // Initial
         when(userRepository.login("somkiatx", "xxxx"))
                 .thenReturn(false);
-        Login login = new Login();
-        login.setUserRepository(userRepository);
         // Call target method
         boolean result = login.process("somkiatx", "xxxx");
         // Assertion
@@ -47,8 +47,6 @@ class LoginMockitoUnitTest {
     public void login_fail_with_exception() {
         // Initial
         when(userRepository.login("fail", "xxxx")).thenThrow(new DatabaseFailureException("DB 500"));
-        Login login = new Login();
-        login.setUserRepository(userRepository);
         // Call target method
         Exception exception = assertThrows(DatabaseFailureException.class, () -> {
             login.process("fail", "xxxx");
