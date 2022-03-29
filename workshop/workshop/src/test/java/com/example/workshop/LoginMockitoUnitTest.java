@@ -8,6 +8,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -46,7 +47,8 @@ class LoginMockitoUnitTest {
     @Test
     public void login_fail_with_exception() {
         // Initial
-        when(userRepository.login("fail", "xxxx")).thenThrow(new DatabaseFailureException("DB 500"));
+        when(userRepository.login("fail", "xxxx"))
+                .thenThrow(new DatabaseFailureException("DB 500"));
         // Call target method
         Exception exception = assertThrows(DatabaseFailureException.class, () -> {
             login.process("fail", "xxxx");
