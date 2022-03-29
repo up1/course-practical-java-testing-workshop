@@ -3,11 +3,29 @@ package com.example.workshop;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class Day1Test {
+
+    @ParameterizedTest
+    @CsvSource({
+            "somkiat,xxxx",
+            "somkiat1,xxxx",
+            "somkiat2,xxxx",
+    })
+    public void login_success(String username, String password) {
+        // Initial
+        Login login = new Login();
+        // Call target class/method
+        boolean result = login.process(username, password);
+        // Validate/verify
+        assertTrue(result);
+        assertEquals(true, result);
+    }
 
     @Test
     @DisplayName("login ผ่านจะต้อง return ค่าเป็น true")
