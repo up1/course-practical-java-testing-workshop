@@ -5,17 +5,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+class StubUserRepositorySuccess extends UserRepository {
+    public boolean login(String username, String password) {
+        return true;
+    }
+}
+
 class LoginUnitTest {
 
     @Test
     public void login_success() {
         // Initial
-        UserRepository stub = new UserRepository() {
-            @Override
-            public boolean login(String username, String password) {
-                return true;
-            }
-        };
+        // Anonymous class
+        UserRepository stub = new StubUserRepositorySuccess();
         Login login = new Login();
         login.setUserRepository(stub);
         // Call target method
