@@ -19,7 +19,6 @@ class LoginMockitoUnitTest {
     @Test
     public void login_success() {
         // Initial
-        // TDD
         // BDD => Given-When-Then
         when(userRepository.login("somkiat", "xxxx"))
                 .thenReturn(true);
@@ -34,14 +33,10 @@ class LoginMockitoUnitTest {
     @Test
     public void login_fail() {
         // Initial
-        UserRepository stub = new UserRepository() {
-            @Override
-            public boolean login(String username, String password) {
-                return false;
-            }
-        };
+        when(userRepository.login("somkiatx", "xxxx"))
+                .thenReturn(false);
         Login login = new Login();
-        login.setUserRepository(stub);
+        login.setUserRepository(userRepository);
         // Call target method
         boolean result = login.process("somkiatx", "xxxx");
         // Assertion
@@ -51,14 +46,9 @@ class LoginMockitoUnitTest {
     @Test
     public void login_fail_with_exception() {
         // Initial
-        UserRepository stub = new UserRepository() {
-            @Override
-            public boolean login(String username, String password) {
-                throw new DatabaseFailureException("DB 500");
-            }
-        };
+        when(userRepository.login("fail", "xxxx")).thenThrow(new DatabaseFailureException("DB 500"));
         Login login = new Login();
-        login.setUserRepository(stub);
+        login.setUserRepository(userRepository);
         // Call target method
         Exception exception = assertThrows(DatabaseFailureException.class, () -> {
             login.process("fail", "xxxx");
