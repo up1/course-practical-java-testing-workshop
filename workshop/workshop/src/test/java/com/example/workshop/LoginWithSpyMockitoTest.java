@@ -25,12 +25,14 @@ class LoginWithSpyMpckitoTest {
     public void called_login_from_repository() {
         // Initial
 //        when(userRepository.login("somkiat", "xxxx")).thenReturn(false);
+        String username = "somkiat";
+        String password = "xxxx";
         doReturn(false)
-                .when(userRepository).login("somkiat", "xxxx");
+                .when(userRepository).login(username, password);
         // Call target method
-        login.process("somkiat", "xxxx");
+        login.process(username, password);
         // Assertion
-        verify(userRepository).login("somkiat", "xxxx");
+        verify(userRepository).login(username, password);
     }
 
 }
