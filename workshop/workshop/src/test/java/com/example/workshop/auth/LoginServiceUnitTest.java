@@ -28,7 +28,10 @@ class LoginServiceUnitTest {
         when(userRepository.findUser("somkiat","xxxx")).thenReturn(true);
         when(redisClient.createSession("somkiat")).thenReturn("123456");
         // Act
-        loginService.process("somkiat","xxxx");
+        LoginResponse result = loginService.process("somkiat","xxxx");
+        // Assert
+        assertEquals("200", result.getCode());
+        assertEquals("Success", result.getMessage());
     }
 
 }
