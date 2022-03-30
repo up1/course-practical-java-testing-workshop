@@ -7,6 +7,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
@@ -26,7 +28,11 @@ class AuthControllerTest {
     @Test
     void login_success() {
         // Arrange
-        when(ldapClient.check("somkiat")).thenReturn(true);
+        when(ldapClient.check("somkiat")).thenReturn(true); // Suggest from
+        // Mockito
+//        given(ldapClient.check("somkiat")).willReturn(true);
+//        doReturn(true).when(ldapClient).check("somkiat");
+
         when(userRepository.findUser("somkiat","xxxx")).thenReturn(true);
         when(redisClient.createSession("somkiat")).thenReturn("123456");
 
